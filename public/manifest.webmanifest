@@ -1,0 +1,16 @@
+{
+  "name": "Zen Parents",
+  "short_name": "Zen Parents",
+  "description": "A school-branded parent portal for admissions, academics, finance, and communication.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0284c7",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

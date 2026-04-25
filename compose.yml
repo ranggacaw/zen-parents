@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '8001:8000'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: php artisan queue:work --tries=1 --timeout=90
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

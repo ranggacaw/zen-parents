@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-slate-50 text-slate-900;
+        background-image: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 28%),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 1));
+    }
+}
+
+@layer components {
+    .portal-shell {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .portal-grid {
+        @apply grid gap-4 md:grid-cols-2 xl:grid-cols-3;
+    }
+}
