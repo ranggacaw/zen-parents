@@ -8,6 +8,13 @@
         background-image: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 28%),
             linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 1));
     }
+
+    :root {
+        --sat: env(safe-area-inset-top);
+        --sab: env(safe-area-inset-bottom);
+        --sal: env(safe-area-inset-left);
+        --sar: env(safe-area-inset-right);
+    }
 }
 
 @layer components {
@@ -17,5 +24,21 @@
 
     .portal-grid {
         @apply grid gap-4 md:grid-cols-2 xl:grid-cols-3;
+    }
+
+    .safe-area-top {
+        padding-top: var(--sat);
+    }
+
+    .safe-area-bottom {
+        padding-bottom: var(--sab);
+    }
+
+    .safe-area-left {
+        padding-left: var(--sal);
+    }
+
+    .safe-area-right {
+        padding-right: var(--sar);
     }
 }

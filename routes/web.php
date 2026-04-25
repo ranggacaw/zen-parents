@@ -17,6 +17,12 @@ Route::get('/manifest.webmanifest', function () {
     ]);
 });
 
+Route::get('/offline', function () {
+    return Response::file(public_path('offline.html'), [
+        'Content-Type' => 'text/html',
+    ]);
+});
+
 Route::get('/sw.js', function () {
     return Response::file(public_path('sw.js'), [
         'Content-Type' => 'application/javascript',

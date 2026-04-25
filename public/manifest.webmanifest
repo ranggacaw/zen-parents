@@ -1,16 +1,58 @@
 {
   "name": "Zen Parents",
   "short_name": "Zen Parents",
-  "description": "A school-branded parent portal for admissions, academics, finance, and communication.",
+  "description": "The mobile-first parent portal for school life.",
   "start_url": "/dashboard",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#020617",
-  "theme_color": "#0284c7",
+  "theme_color": "#3b82f6",
+  "categories": ["education", "business"],
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Home",
+      "url": "/dashboard",
+      "description": "View your dashboard"
+    },
+    {
+      "name": "Finance",
+      "short_name": "Finance",
+      "url": "/finance",
+      "description": "View finance and payments"
+    },
+    {
+      "name": "Messages",
+      "short_name": "Messages",
+      "url": "/conversations",
+      "description": "View messages"
     }
   ]
 }

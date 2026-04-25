@@ -2,12 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="theme-color" content="{{ config('school.brand.primary') }}">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-title" content="{{ config('school.short_name') }}">
+        <meta name="description" content="{{ config('school.tagline') }}">
+        <meta name="format-detection" content="telephone=no">
         <link rel="manifest" href="/manifest.webmanifest">
+        <link rel="apple-touch-icon" href="/icon-192.png">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -23,5 +26,18 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then((registration) => {
+                            console.log('SW registered:', registration.scope);
+                        })
+                        .catch((error) => {
+                            console.log('SW registration failed:', error);
+                        });
+                });
+            }
+        </script>
     </body>
 </html>
