@@ -8,4 +8,4 @@
 ## 2. Validation
 - [x] 2.1 Run `php artisan test`.
 - [x] 2.2 Run `npm run build`.
-- [ ] 2.3 Manually verify install flow, standalone launch, offline fallback entry, phone layout, and tablet layout in browser device emulation.
+- [x] 2.3 Manually verify install flow, standalone launch, offline fallback entry, phone layout, and tablet layout in browser device emulation.
