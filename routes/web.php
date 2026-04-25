@@ -7,6 +7,7 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentCenterController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/anakku', [StudentCenterController::class, 'index'])->name('student-center.index');
+    Route::prefix('/anakku/students/{student}')->name('student-center.')->group(function () {
+        Route::get('/', [StudentCenterController::class, 'show'])->name('show');
+        Route::get('/schedule', [StudentCenterController::class, 'schedule'])->name('schedule');
+        Route::get('/rkh', [StudentCenterController::class, 'rkh'])->name('rkh');
+        Route::get('/reports', [StudentCenterController::class, 'reports'])->name('reports.index');
+        Route::get('/reports/{report}', [StudentCenterController::class, 'reportDetail'])->name('reports.show');
+        Route::get('/attendance', [StudentCenterController::class, 'attendance'])->name('attendance');
+        Route::get('/analytics', [StudentCenterController::class, 'analytics'])->name('analytics.index');
+        Route::get('/analytics/final-score', [StudentCenterController::class, 'analyticsFinal'])->name('analytics.final');
+        Route::get('/analytics/subjects', [StudentCenterController::class, 'analyticsSubjects'])->name('analytics.subjects');
+    });
 
     Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.show');
 

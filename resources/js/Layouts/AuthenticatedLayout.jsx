@@ -8,7 +8,8 @@ export default function AuthenticatedLayout({ header, children }) {
     const { auth, school } = usePage().props;
     const user = auth.user;
     const [installPrompt, setInstallPrompt] = useState(null);
-    const [isTablet, setIsTablet] = useState(false);
+    const [usesSidebarNav, setUsesSidebarNav] = useState(false);
+    const [isStandalone, setIsStandalone] = useState(false);
 
     useEffect(() => {
         const handleBeforeInstallPrompt = (event) => {
@@ -16,18 +17,30 @@ export default function AuthenticatedLayout({ header, children }) {
             setInstallPrompt(event);
         };
 
-        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-        const checkTablet = () => {
-            setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+        const handleAppInstalled = () => {
+            setInstallPrompt(null);
+            setIsStandalone(true);
         };
 
-        checkTablet();
-        window.addEventListener('resize', checkTablet);
+        const standaloneQuery = window.matchMedia('(display-mode: standalone)');
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        window.addEventListener('appinstalled', handleAppInstalled);
+
+        const updateLayoutState = () => {
+            setUsesSidebarNav(window.innerWidth >= 768);
+            setIsStandalone(standaloneQuery.matches || window.navigator.standalone === true);
+        };
+
+        updateLayoutState();
+        standaloneQuery.addEventListener('change', updateLayoutState);
+        window.addEventListener('resize', updateLayoutState);
 
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-            window.removeEventListener('resize', checkTablet);
+            window.removeEventListener('appinstalled', handleAppInstalled);
+            standaloneQuery.removeEventListener('change', updateLayoutState);
+            window.removeEventListener('resize', updateLayoutState);
         };
     }, []);
 
@@ -40,8 +53,8 @@ export default function AuthenticatedLayout({ header, children }) {
     ];
 
     return (
-        <div className="min-h-screen pb-20 md:pb-6">
-            <div className="portal-shell py-4 md:py-6">
+        <div className={cn('min-h-screen pb-[calc(5.5rem+var(--sab))] safe-area-bottom md:pb-6', usesSidebarNav && 'md:pl-20 lg:pl-64')}>
+            <div className="portal-shell safe-area-top py-4 md:py-6">
                 <div className="rounded-2xl md:rounded-[2rem] bg-slate-950 px-4 md:px-8 py-4 md:py-5 text-white shadow-xl">
                     <div className="flex flex-col gap-3 md:gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="space-y-2 md:space-y-3">
@@ -59,7 +72,8 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="flex flex-wrap items-center gap-2 md:gap-3">
                             <Badge className="bg-white/10 text-white text-xs md:text-sm">{user.preferred_name || user.name}</Badge>
-                            {installPrompt && school.features.pwa ? (
+                            {isStandalone ? <Badge className="bg-emerald-500/20 text-emerald-100 text-xs md:text-sm">Installed</Badge> : null}
+                            {installPrompt && school.features.pwa && !isStandalone ? (
                                 <Button
                                     variant="secondary"
                                     size="sm"
@@ -73,10 +87,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                     <span className="md:hidden">Install</span>
                                 </Button>
                             ) : null}
-                            <Link href={route('logout')} method="post" as="button">
-                                <Button variant="ghost" size="sm" className="text-white hover:bg-white/10 hover:text-white">
-                                    Log out
-                                </Button>
+                            <Link 
+                                href={route('logout')} 
+                                method="post" 
+                                as="button"
+                                className="inline-flex items-center justify-center rounded-full text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 px-3 py-2 focus-visible:ring-slate-400 text-white hover:bg-white/10"
+                            >
+                                Log out
                             </Link>
                         </div>
                     </div>
@@ -88,9 +105,9 @@ export default function AuthenticatedLayout({ header, children }) {
                 <main>{children}</main>
             </div>
 
-            {isTablet ? (
-                <nav className="fixed left-0 top-0 h-full w-16 md:w-20 lg:w-64 flex-col border-r border-slate-200 bg-white/95 backdrop-blur z-20 hidden md:flex">
-                    <div className="flex-1 py-4 space-y-1">
+            {usesSidebarNav ? (
+                <nav className="safe-area-top safe-area-bottom fixed left-0 top-0 z-20 hidden h-full w-20 flex-col border-r border-slate-200 bg-white/95 backdrop-blur md:flex lg:w-64">
+                    <div className="flex-1 space-y-1 py-4">
                         {navItems.map((item) => (
                             <Link
                                 key={item.routeName}
@@ -109,7 +126,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </nav>
             ) : (
-                <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 px-2 py-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] backdrop-blur md:hidden">
+                <nav className="safe-area-bottom safe-area-left safe-area-right fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 px-2 py-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] backdrop-blur md:hidden">
                     <div className="flex items-center justify-between max-w-lg mx-auto">
                         {navItems.map((item) => (
                             <Link

@@ -13,6 +13,20 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+if (typeof window !== 'undefined') {
+    const standaloneQuery = window.matchMedia('(display-mode: standalone)');
+
+    const updateShellState = () => {
+        const isStandalone = standaloneQuery.matches || window.navigator.standalone === true;
+
+        document.documentElement.dataset.displayMode = isStandalone ? 'standalone' : 'browser';
+    };
+
+    updateShellState();
+    standaloneQuery.addEventListener('change', updateShellState);
+    window.addEventListener('appinstalled', updateShellState);
+}
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>

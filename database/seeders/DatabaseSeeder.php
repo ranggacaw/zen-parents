@@ -46,6 +46,8 @@ class DatabaseSeeder extends Seeder
             'guardian_phone' => '0812-0000-9012',
             'address_line' => 'Jl. Melati No. 12',
             'city' => 'Bandung',
+                'province' => 'Jawa Barat',
+                'postal_code' => '40115',
             'province' => 'West Java',
             'postal_code' => '40115',
         ]);
@@ -183,18 +185,24 @@ class DatabaseSeeder extends Seeder
             'commute_minutes' => 18,
             'demographic_data' => [
                 'gender' => 'Female',
+                'religion' => 'Islam',
                 'birth_date' => '2022-05-05',
             ],
             'family_data' => [
                 'father_name' => 'Rafi Rahman',
                 'mother_name' => 'Alya Rahman',
+                'parent_phone' => '0812-0000-1234',
+                'family_card_number' => '3273010101010001',
             ],
             'address_data' => [
                 'address_line' => 'Jl. Melati No. 12',
                 'city' => 'Bandung',
+                'province' => 'Jawa Barat',
+                'postal_code' => '40115',
             ],
             'health_data' => [
                 'blood_type' => 'O',
+                'allergies' => 'None',
                 'medical_notes' => 'No known conditions',
             ],
             'supporting_document_paths' => ['admissions/documents/family-card.pdf'],

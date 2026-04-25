@@ -4,7 +4,10 @@ const OFFLINE_URL = '/offline';
 const PRECACHE_URLS = [
     '/',
     '/dashboard',
+    OFFLINE_URL,
     '/manifest.webmanifest',
+    '/icon-192.png',
+    '/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -51,8 +54,14 @@ self.addEventListener('fetch', (event) => {
 
                     return response;
                 })
-                .catch(() => {
-                    return caches.match(OFFLINE_URL).catch(() => caches.match('/'));
+                .catch(async () => {
+                    if (event.request.mode === 'navigate') {
+                        return (await caches.match(OFFLINE_URL))
+                            || (await caches.match('/'))
+                            || Response.error();
+                    }
+
+                    return Response.error();
                 });
         })
     );

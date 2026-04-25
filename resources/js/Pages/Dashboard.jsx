@@ -45,6 +45,19 @@ export default function Dashboard({ household, students, applicants, finance_sum
 
                     <Card>
                         <CardHeader className="pb-3">
+                            <CardDescription>Anakku clone</CardDescription>
+                            <CardTitle className="text-xl">Student center journey</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4 text-sm text-slate-600">
+                            <p>Open the cloned mobile-first Anakku flow to browse the student hub, schedule, RKH, reports, attendance, and analytics views.</p>
+                            <Link href={route('student-center.index')} className="inline-flex">
+                                <Button size="sm">Open Anakku</Button>
+                            </Link>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="pb-3">
                             <CardDescription>Admissions</CardDescription>
                             <CardTitle className="text-xl">{applicants.length} active PPDB applicants</CardTitle>
                         </CardHeader>

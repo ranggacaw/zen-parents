@@ -24,20 +24,7 @@
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased safe-area-left safe-area-right">
         @inertia
-        <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then((registration) => {
-                            console.log('SW registered:', registration.scope);
-                        })
-                        .catch((error) => {
-                            console.log('SW registration failed:', error);
-                        });
-                });
-            }
-        </script>
     </body>
 </html>
